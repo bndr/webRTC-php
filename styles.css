@@ -1,0 +1,92 @@
+.chat_box {
+	border:1px solid #ccc;
+	border-radius:5px;
+	margin-top:5px;
+	min-height:400px;
+}
+.main {
+	margin-top:25px;
+}
+.message  {
+	position: relative;
+	margin: 10px 17px 10px 17px;
+	display: inline-block;
+	min-height:30px;
+	font-family: 'Segoe UI Semilight', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 11pt;
+	letter-spacing: 0.02em;
+	line-height: 14pt;
+	font-smooth: always;
+	height: auto;
+	padding: 10px;
+	background-color: #ecf0f5;
+	border-radius: 6px;
+}
+.message-wrapper {
+	width:100%;
+	display:block;
+}
+.message-left {
+	text-alignt:left;
+}
+.message-right {
+	text-align:right;
+	float:right;
+}
+.message-left:before {
+	content: "";
+	border-style: solid;
+	border-width: 12px 12px 12px 0;
+	border-color: transparent #eceff1 transparent transparent;
+	height: 0px;
+	position: absolute;
+	left: -12px;
+	top: 15px;
+	width: 0;
+	-webkit-transform: rotate(360deg);
+}
+.message-right:before {
+	content: "";
+	border-style: solid;
+	border-width: 12px 0 12px 12px;
+	border-color:transparent transparent transparent #eceff1;
+	height: 0px;
+	position: absolute;
+	right: -12px;
+	top: 15px;
+	width: 0;
+	-webkit-transform: rotate(360deg);
+}
+.input-chat {
+margin-top:10px;
+margin-right: 0px;
+margin-bottom: 10px;
+position: relative;
+}
+#chat_val {
+border: 1px #bababa solid;
+width: 100%;
+padding: 4px 2px 6px 5px;
+background-color: #fff;
+outline: 0;
+margin-right: 2px;
+min-height: 32px;
+position: relative;
+box-sizing: border-box;
+}
+.input-chat-button {
+	background: #fff;
+	top: 2px;
+	width: 26px !important;
+	height: 27px !important;
+	min-width: 26px !important;
+	min-height: 27px !important;
+	cursor: pointer;
+	color: #000;
+	position: absolute;
+	left: 100%;
+	margin-left: -28px;
+	display: block;
+	border: 1px #fff solid;
+}
