@@ -1,8 +1,8 @@
 <?php
 
-function generate_uid($length = 25)
+function generate_uid($length = 10)
 {
-    $letters = "abcdefghjklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+    $letters = "abcdefghjklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@=";
 
     $for_shuffle = str_split($letters);
     shuffle($for_shuffle);
@@ -15,7 +15,7 @@ function generate_uid($length = 25)
     return $password;
 }
 
-$uid = isset($_GET['uid']) ? $_GET['uid'] : generate_uid();
+$uid = isset($_GET['uid']) ? explode("|", $_GET['uid']) : array(generate_uid(mt_rand(10, 13)), generate_uid(mt_rand(8, 13)));
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,8 @@ $uid = isset($_GET['uid']) ? $_GET['uid'] : generate_uid();
 <div class="container">
     <div class="row main">
         <div class="span8">
-            <h3>Your session id: <a href="?uid=<?= $uid ?>">#<?= $uid ?></a></h3>
+            <h3>Your session id: <a id="hash"
+                                    href="?uid=<?= $uid[0] . "|" . $uid[1] ?>">#<?= $uid[0] . "|" . $uid[1] ?></a></h3>
         </div>
         <div class="span8">
             <div class="alert alert-success">
@@ -53,8 +54,10 @@ $uid = isset($_GET['uid']) ? $_GET['uid'] : generate_uid();
 
 </body>
 <script>
-    var uid = "<?= (isset($_GET['uid']) ? $_GET['uid'] : $uid) ?>";
+    var uid = "<?=  $uid[0] ?>";
+    var encr = "<?=  $uid[1] ?>";
     var isCaller = <?= (isset($_GET['uid']) ? "false" : "true") ?>;
+
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="crypt.js"></script>

@@ -1,4 +1,4 @@
-var uid, dataChannel, isCaller, localPeerConnection, chat_on = false, times_asked = 0;
+var uid,encr, dataChannel, isCaller, localPeerConnection, chat_on = false, times_asked = 0;
 var sdpConstraints = {'mandatory': {
     'OfferToReceiveAudio': false,
     'OfferToReceiveVideo': false
@@ -84,7 +84,7 @@ function setLocalAndSendMessage(sessionDescription) {
 }
 function sendSignal(message) {
     var msgString = JSON.stringify(message);
-    var encrypted = window.btoa(JSON.stringify(sjcl.encrypt(uid, msgString, {count: 2048, ks: 256})));
+    var encrypted = window.btoa(JSON.stringify(sjcl.encrypt(encr, msgString, {count: 2048, ks: 256})));
     var path = 'auth.php?uid=' + uid;
     if (isCaller)
         path += '&owner=1';
@@ -110,7 +110,7 @@ function getRemoteUserData(type) {
                 trace("Not authorized for this session", "Session error. Not authorized or expired");
                 throw new Error("Session error");
             }
-            sdp = JSON.parse(sjcl.decrypt(uid, JSON.parse(window.atob(result.sdp))));
+            sdp = JSON.parse(sjcl.decrypt(encr, JSON.parse(window.atob(result.sdp))));
 
             trace("Got remote user Data");
         }
@@ -157,7 +157,7 @@ function pull() {
 
             trace("Received remote Description. Adding it", "Remote User connected. Initializing...");
 
-            var desc = JSON.parse(sjcl.decrypt(uid, JSON.parse(window.atob(sig.sdp))));
+            var desc = JSON.parse(sjcl.decrypt(encr, JSON.parse(window.atob(sig.sdp))));
             localPeerConnection.setRemoteDescription(new RTCSessionDescription(desc));
             setIceServers('calee');
             chat_on = true;
@@ -264,7 +264,7 @@ function messageReceived(msg) {
 
 function encryptDecrypt(msg, encrypt) {
 
-    var data = (encrypt) ? window.btoa(JSON.stringify(sjcl.encrypt(uid, msg, {count: 2048, ks: 256}))) : sjcl.decrypt(uid, JSON.parse(window.atob(msg)));
+    var data = (encrypt) ? window.btoa(JSON.stringify(sjcl.encrypt(encr, msg, {count: 2048, ks: 256}))) : sjcl.decrypt(encr, JSON.parse(window.atob(msg)));
     return data;
 }
 
