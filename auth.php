@@ -31,7 +31,8 @@ if (isset($_GET['getanswer'])) {
 } else if ($_POST) {
     
     $json = json_decode($_POST['data'], true);
-    insertData($_GET['uid'], $_POST['data'], $json['type']);
+    $type = $_REQUEST['type'];
+    insertData($_GET['uid'], $_POST['data'], $type);
 }
 
 /**
